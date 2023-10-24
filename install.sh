@@ -117,7 +117,7 @@ done
 
 clear 
 
-for PKG in xdg-desktop-portal-hyprland base-devel librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look nvim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava; do
+for PKG in xdg-desktop-portal-hyprland base-devel librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $PKG install had failed, please check the install.log"
@@ -155,6 +155,8 @@ systemctl enable --user pipewire.service
 systemctl start --user pipewire.service
 systemctl enable --user pipewire-pulse.service
 systemctl start --user pipewire-pulse.service
+systemctl enable --user mpd
+systemctl start --user mpd 
 
 printf "${NOTE} Installing Bluetooth Packages...\n"
   for BLUE in bluez bluez-utils blueman; do

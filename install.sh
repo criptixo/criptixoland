@@ -123,7 +123,7 @@ done
 
 clear
 
-for FONT in ttf-hack-nerd otf-font-awesome ttf-font-awesome noto-fonts; do
+for FONT in ttf-hack-nerd otf-font-awesome ttf-font-awesome noto-fonts ttf-ubuntu-nerd; do
     install_package  "$FONT" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $FONT install had failed, please check the install.log"

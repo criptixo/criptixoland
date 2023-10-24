@@ -36,8 +36,6 @@ printf "${GREN}+$(printf '%*s' "$((TERM_WIDTH-1))" '' | tr ' ' -)+${NC}\n"
 printf "${GREN}|%*s${MESSAGE}%*s|${NC}\n" $PAD_LENGTH "" $PAD_LENGTH ""
 printf "${GREN}+$(printf '%*s' "$((TERM_WIDTH-1))" '' | tr ' ' -)+${NC}\n"
 
-sleep 2
-
 # Warning message
 printf "${ORANGE}$(tput smso)PLEASE ONLY INSTALL ON A NEW SYSTEM$(tput rmso)\n"
 printf "\n"
@@ -47,8 +45,6 @@ printf "\n"
 printf "\n${NOTE} If you are installing on a VM ensure that 3D acceleration is enabled.\n"
 sleep 2
 printf "\n"
-printf "\n"
-
 
 read -n1 -rep "${CAT} Shall we proceed with installation (y/n) " PROCEED
     echo

@@ -20,13 +20,10 @@ RESET=$(tput sgr0)
 # Set the name of the log file to include the current date and time
 LOG="install-$(date +%d-%H%M%S).log"
 
-#clear screen
 clear
 
-# Get the width of the terminal
 TERM_WIDTH=$(tput cols)
 
-# Calculate the padding for the message
 MESSAGE="Welcome to my Arch-Hyprland Installer"
 PAD_LENGTH=$(( ($TERM_WIDTH - ${#MESSAGE}) / 2 ))
 
@@ -71,10 +68,6 @@ makepkg -si --noconfirm 2>&1 | tee -a "$LOG" || { printf "%s - Failed to install
 cd ..
 
 clear
-
-printf 'enabling multilib repos'
-
-
 
 printf "\n%s - Performing a full system update to avoid issues.... \n" "${NOTE}"
 yay -Syu --noconfirm 2>&1 | tee -a "$LOG" || { printf "%s - Failed to update system\n" "${ERROR}"; exit 1; }
@@ -124,10 +117,7 @@ done
 
 clear 
 
-# installation of other components needed
-printf "\n%s - Installing necessary packages this may take up to 20min depending on your internet speed!...\n" "${NOTE}"
-
-for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look nvim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mpd python-requests pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava; do
+for PKG in xdg-desktop-portal-hyprland base-devel librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look nvim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $PKG install had failed, please check the install.log"
@@ -135,18 +125,11 @@ for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot 
     fi
 done
 
-printf "\n%s - Installing additional packages please be patient...\n" "${NOTE}"
-for PKGADD in librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
-    install_package "$PKGADD" 2>&1 | tee -a "$LOG"
-    if [ $? -ne 0 ]; then
-        echo -e "\e[1A\e[K${ERROR} - $PKGADD install had failed, please check the install.log"
-        exit 1
-    fi
-done
+clear
 
 for FONT in ttf-hack-nerd otf-font-awesome ttf-font-awesome; do
     install_package  "$FONT" 2>&1 | tee -a "$LOG"
-        if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $FONT install had failed, please check the install.log"
         exit 1
     fi
@@ -155,9 +138,7 @@ done
 echo 
 print_success "All necessary packages installed successfully."
 
-
 clear
-
 
 printf "${NOTE} Installing Theme packages...\n"
   for THEME in catppuccin-gtk-theme-mocha; do
@@ -169,8 +150,6 @@ printf "${NOTE} Installing Theme packages...\n"
 done
 
 clear
-
-printf 'enabling the pipewire-pulse.service'
 
 systemctl enable --user pipewire.service
 systemctl start --user pipewire.service
@@ -202,9 +181,8 @@ done
 
 
 sudo sed 's/\/bin\/sh/Hyprland'/etc/greetd/config.toml 
-sudi printf '[initial_sessin] \n command= "Hyprland > /dev/null" \n user = "criptixo"' > /etc/greetd/config.toml 
-
-printdf 'Enabling greetd service...\n'
+sudo printf '[initial_sessin] \n command= "Hyprland > /dev/null" \n user = "criptixo"' > /etc/greetd/config.toml 
+printf 'enabling greetd'
 sudo systemctl enable greetd.service
 
 clear
@@ -232,14 +210,6 @@ chmod +x ~/.config/waybar/mediaplayer.py/* 2>&1 | tee -a "$LOG"
 
 clear
 
-### Script is done ###
-printf "\n${OK} Installation Completed.\n"
-printf "\n"
-printf "\n"
-printf "\n"
-printf "\n"
-sleep 5
-printf "\n"
-printf "\n"
-printf "\n"
+printf "\n${OK} Installation Finished.\n"
+sleep 3
 sudo systemctl start greetd.service 2>&1 | tee -a "$LOG"

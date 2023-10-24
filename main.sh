@@ -93,13 +93,9 @@ install_package() {
         # package not installed
         echo -e "${NOTE} installing $1 ..."
         yay -S --noconfirm "$1" 2>&1 | tee -a "$LOG"
-        # making sure package installed
+        #  making sure it is installed
         if yay -Q "$1" &>> /dev/null ; thenISAUR
-            echo -e "\e[1A\e[K${OK} $1 was installed."
-        else
-            # something is missing, exitting to review log
-            echo -e "\e[1A\e[K${ERROR} $1 failed to install :( , please check the install.log . You may need to install manually! Sorry I have tried :("
-            exit 1
+            echo -e "\e[1A\e[K${OK} $1 was installed."                                  
         fi
     fi
 }

@@ -1,0 +1,38 @@
+{   "name": "side",
+    "layer": "top",
+    "position": "left",
+    "mod": "dock",
+    "width": 22,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "modules-left": [""],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["tray"],
+
+    "tray":{
+    "icon-size": 22,
+    "spacing": 5,
+    },
+
+   "hyprland/workspaces": {
+   "format": "<sub>{name}</sub>\n{windows}",
+   "format-window-separator": "\n",
+   "window-rewrite-default": "",
+   "window-rewrite": {
+	"firefox": "",
+   	"foot": "",
+    	"code": "󰨞",
+    	},
+   "disable-scroll": false,
+   "on-click": "activate",
+   "persistent-workspaces": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        },
+    },
+}

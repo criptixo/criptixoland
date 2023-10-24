@@ -1,0 +1,27 @@
+window {
+    background-color:rgba(30, 30, 46, 1);
+    }
+#input {
+margin: 0px;
+border: 0px;
+}
+
+#inner-box {
+margin: 0px;`
+border: 0px;
+}
+        
+#outer-box {
+margin: 0px;
+border: 0px;
+}
+        
+#scroll {
+margin: 5px;
+border: 2px;
+}
+        
+#text {
+margin: 5px;
+border: 2px;
+}

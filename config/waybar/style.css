@@ -1,0 +1,33 @@
+* { 
+    border-radius: 0;
+    font-family: "Hack Nerd Font";
+    font-weight: lighter;
+    font-size: 12pt;
+    font-weight: bold;
+    min-height: 0;
+    color: #ffffff;
+
+}
+
+window#waybar{
+    background: rgba(30, 30, 46, 0.7);
+    }
+
+.modules-right{
+    padding: 0px 0px;}
+
+.modules-center{
+    padding: 0px 0px;}
+
+.modules-left{
+    padding: 0px 0px;}
+
+#workspaces button{
+
+}
+#workspaces button.visible{
+    background-color: rgba(30, 30, 46, 0.7)
+}
+#workspaces button.active{
+    background-color: rgba(30, 30, 46, 1)
+}

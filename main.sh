@@ -127,7 +127,7 @@ clear
 # installation of other components needed
 printf "\n%s - Installing necessary packages this may take up to 20min depending on your internet speed!...\n" "${NOTE}"
 
-for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look nvim pipewire pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mpd python-requests pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava; do
+for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look nvim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mpd python-requests pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $PKG install had failed, please check the install.log"

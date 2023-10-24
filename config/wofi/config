@@ -1,0 +1,17 @@
+width=100%
+height=100
+x=0
+y=0
+prompt=
+orientation=vertical
+lines=22
+columns=3
+mode=drun
+filter_rate=100
+matching=contains
+insensitive=true
+term=foot
+allow_images=flase
+allow_markup=false
+dmenu-parse_action=true
+drun-display_generic=flase

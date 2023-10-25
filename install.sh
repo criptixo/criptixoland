@@ -143,7 +143,7 @@ done
 printf " Activating Bluetooth Services...\n"
 sudo systemctl enable --now bluetooth.service 2>&1 | tee -a "$LOG"
 
-print "${NOTE} Installing greetd...\n"
+printf "${NOTE} Installing greetd...\n"
   for GREETD in greetd; do
     install_package "$GREETD" 2>&1 | tee -a "$LOG"
         if [ $? -ne 0 ]; then 

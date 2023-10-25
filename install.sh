@@ -164,7 +164,7 @@ printf "Copying config files...\n";
 rm -rf .config;
 mkdir -p ~/.config; 
 cp -r config/* ~/.config/;
-rm -rf .bashrc && cp misc/.bashrc .bashrc;   
+rm -rf .bashrc && cp misc/.bashrc ~/.bashrc;   
 chmod +x ~/.config/hypr/screenshot.sh;
 chmod +x ~/.config/waybar/mediaplayer.py;
 

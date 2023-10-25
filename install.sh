@@ -104,7 +104,7 @@ for HYP in hyprland; do
     install_package "$HYP" 2>&1 | tee -a $LOG
 done
 
-for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
+for PKG in xdg-desktop-portal-hyprland base-devel waybar-cava foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $PKG install had failed, please check the install.log"

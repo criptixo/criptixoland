@@ -39,10 +39,6 @@ printf "${ORANGE}$(tput smso)PLEASE ONLY INSTALL ON A NEW SYSTEM$(tput rmso)\n"
 printf "\n"
 printf "\n"
 
-# Print VM warning message
-printf "\n${NOTE} If you are installing on a VM ensure that 3D acceleration is enabled.\n"
-sleep 2
-printf "\n"
 
 read -n1 -rep "${CAT} Shall we proceed with installation (y/n) " PROCEED
     echo
@@ -168,7 +164,7 @@ rm -rf .bashrc && cp misc/.bashrc .bashrc 2>&1 | tee -a "$LOG"
 chmod +x ~/.config/hypr/screenshot.sh 2>&1 | tee -a "$LOG"
 chmod +x ~/.config/waybar/mediaplayer.py 2>&1 | tee -a "$LOG"
 
-
 printf "\n${OK} Installation Finished.\n" &
 sleep 3
-sudo systemctl start greetd.service 2>&1 | tee -a "$LOG"
+
+sudo systemctl start greetd.service

@@ -20,8 +20,6 @@ RESET=$(tput sgr0)
 # Set the name of the log file to include the current date and time
 LOG="install-$(date +%d-%H%M%S).log"
 
-clear
-
 TERM_WIDTH=$(tput cols)
 
 MESSAGE="Welcome to my Arch-Hyprland Installer"
@@ -55,20 +53,14 @@ else
     exit
 fi
 
-clear
-
 printf "\n%s - Installing yay...\n" "${NOTE}"
 git clone https://aur.archlinux.org/yay-bin.git || { printf "%s - Failed to clone yay from AUR\n" "${ERROR}"; exit 1; }
 cd yay-bin || { printf "%s - Failed to enter yay-bin directory\n" "${ERROR}"; exit 1; }
 makepkg -si --noconfirm 2>&1 | tee -a "$LOG" || { printf "%s - Failed to install yay from AUR\n" "${ERROR}"; exit 1; }
 cd ..
 
-clear
-
 printf "\n%s - Performing a full system update to avoid issues.... \n" "${NOTE}"
 yay -Syu --noconfirm 2>&1 | tee -a "$LOG" || { printf "%s - Failed to update system\n" "${ERROR}"; exit 1; }
-
-clear
 
 # Set the script to exit on error
 set -e
@@ -111,8 +103,6 @@ for HYP in hyprland; do
     install_package "$HYP" 2>&1 | tee -a $LOG
 done
 
-clear 
-
 for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
@@ -120,8 +110,6 @@ for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot 
         exit 1
     fi
 done
-
-clear
 
 for FONT in ttf-hack-nerd otf-font-awesome ttf-font-awesome noto-fonts ttf-ubuntu-nerd; do
     install_package  "$FONT" 2>&1 | tee -a "$LOG"
@@ -133,8 +121,6 @@ done
 
 echo 
 print_success "All necessary packages installed successfully."
-
-clear
 
 printf "${NOTE} Installing Theme packages...\n"
   for THEME in catppuccin-gtk-theme-mocha; do
@@ -152,11 +138,10 @@ printf "${NOTE} Installing Bluetooth Packages...\n"
         echo -e "\e[1A\e[K${ERROR} - $BLUE install had failed, please check the install.log"
         exit 1
         fi
-    done
+done
 
-  printf " Activating Bluetooth Services...\n"
-  sudo systemctl enable --now bluetooth.service 2>&1 | tee -a "$LOG"
-fi
+printf " Activating Bluetooth Services...\n"
+sudo systemctl enable --now bluetooth.service 2>&1 | tee -a "$LOG"
 
 print "${NOTE} Installing greetd...\n"
   for GREETD in greetd; do
@@ -166,13 +151,9 @@ print "${NOTE} Installing greetd...\n"
         fi
 done
 
-sudo sed 's/\/bin\/sh/Hyprland'/etc/greetd/config.toml 
-sudo printf '[initial_sessin] \n command= "Hyprland > /dev/null" \n user = "criptixo"' > /etc/greetd/config.toml 
-printf 'enabling greetd'
-sudo systemctl enable greetd.service
-
-### Copy Config Files ###
-set -e 
+sudo sed 's/\/bin\/sh/Hyprland'/etc/greetd/config.toml &
+sudo printf '[initial_sessin] \n command= "Hyprland > /dev/null" \n user = "criptixo"' > /etc/greetd/config.toml & 
+sudo systemctl enable greetd.service &
 
 systemctl enable --user pipewire.service &
 systemctl start --user pipewire.service &

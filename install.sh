@@ -113,7 +113,7 @@ done
 
 clear 
 
-for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pipewire-jack pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
+for PKG in xdg-desktop-portal-hyprland base-devel waybar-hyprland-cava-git foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $PKG install had failed, please check the install.log"
@@ -145,15 +145,6 @@ printf "${NOTE} Installing Theme packages...\n"
       fi
 done
 
-clear
-
-systemctl enable --user pipewire.service
-systemctl start --user pipewire.service
-systemctl enable --user pipewire-pulse.service
-systemctl start --user pipewire-pulse.service
-systemctl enable --user mpd
-systemctl start --user mpd 
-
 printf "${NOTE} Installing Bluetooth Packages...\n"
   for BLUE in bluez bluez-utils blueman; do
     install_package "$BLUE" 2>&1 | tee -a "$LOG"
@@ -167,8 +158,6 @@ printf "${NOTE} Installing Bluetooth Packages...\n"
   sudo systemctl enable --now bluetooth.service 2>&1 | tee -a "$LOG"
 fi
 
-clear
-
 print "${NOTE} Installing greetd...\n"
   for GREETD in greetd; do
     install_package "$GREETD" 2>&1 | tee -a "$LOG"
@@ -177,37 +166,32 @@ print "${NOTE} Installing greetd...\n"
         fi
 done
 
-
 sudo sed 's/\/bin\/sh/Hyprland'/etc/greetd/config.toml 
 sudo printf '[initial_sessin] \n command= "Hyprland > /dev/null" \n user = "criptixo"' > /etc/greetd/config.toml 
 printf 'enabling greetd'
 sudo systemctl enable greetd.service
 
-clear
-
-printf "\n"
-
 ### Copy Config Files ###
 set -e 
 
+systemctl enable --user pipewire.service &
+systemctl start --user pipewire.service &
+systemctl enable --user pipewire-pulse.service &
+systemctl start --user pipewire-pulse.service &
+systemctl enable --user mpd &
+systemctl start --user mpd &
+
 printf "Copying config files...\n"
-mkdir -p ~/.config
-cp -r config/hypr ~/.config/ || { echo "Error: Failed to copy hypr config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/foot ~/.config/ || { echo "Error: Failed to copy foot config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/wlogout ~/.config/ || { echo "Error: Failed to copy wlogout config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/waybar ~/.config/ || { echo "Error: Failed to copy waybar config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/dunst ~/.config/ || { echo "Error: Failed to copy dunst config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/mpd ~/.config/ || { echo "Error: Failed to copy mpd config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/wofi ~/.config/ || { echo "Error: Failed to copy wofi config files."; exit 1; } 2>&1 | tee -a "$LOG"
-cp -r config/cava ~/.config/ || { echo "Error: Failed to copy cava config files."; exit 1; } 2>&1 | tee -a "$LOG"
+rm -rf .config &
+mkdir -p ~/.config &
+cp -r config/* ~/.config/ || { echo "Error: Failed to copy config files."; exit 1; } 2>&1 | tee -a "$LOG"
 rm -rf .bashrc && cp misc/.bashrc .bashrc 2>&1 | tee -a "$LOG"   
 printf "Setting executables...\n"
 chmod +x ~/.config/hypr/screenshot.sh/* 2>&1 | tee -a "$LOG"
 chmod +x ~/.config/waybar/weather.sh/* 2>&1 | tee -a "$LOG"
 chmod +x ~/.config/waybar/mediaplayer.py/* 2>&1 | tee -a "$LOG"
 
-clear
 
-printf "\n${OK} Installation Finished.\n"
+printf "\n${OK} Installation Finished.\n" &
 sleep 3
 sudo systemctl start greetd.service 2>&1 | tee -a "$LOG"

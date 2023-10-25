@@ -104,7 +104,7 @@ for HYP in hyprland; do
     install_package "$HYP" 2>&1 | tee -a $LOG
 done
 
-for PKG in xdg-desktop-portal-hyprland base-devel waybar-cava foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet cava osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
+for PKG in xdg-desktop-portal-hyprland base-devel waybar foot swaybg thunar wofi dunst grim slurp wl-clipboard polkit-gnome nwg-look neovim pipewire qt5-wayland qt6-wayland pipewire-pulse pipewire-alsa pavucontrol playerctl qt5ct qt6ct ffmpeg mpv mp pamixer brightnessctl xdg-user-dirs viewnior htop neofetch network-manager-applet osu-handler librewolf-bin osu-lazer-bin nicotine+ cantata gimp piper armcord-bin transmission-gtk obs-studio; do
     install_package "$PKG" 2>&1 | tee -a "$LOG"
     if [ $? -ne 0 ]; then
         echo -e "\e[1A\e[K${ERROR} - $PKG install had failed, please check the install.log"
@@ -152,22 +152,19 @@ printf "${NOTE} Installing greetd...\n"
         fi
 done
 
-sudo sed 's/\/bin\/sh/Hyprland'/etc/greetd/config.toml &
+sudo sed 's/\/bin\/sh/Hyprland/2'/etc/greetd/config.toml &
 sudo printf '[initial_sessin] \n command= "Hyprland > /dev/null" \n user = "criptixo"' > /etc/greetd/config.toml & 
 sudo systemctl enable greetd.service &
-
 systemctl enable --user pipewire.service &
 systemctl start --user pipewire.service &
 systemctl enable --user pipewire-pulse.service &
 systemctl start --user pipewire-pulse.service &
-systemctl enable --user mpd.service &
 
 printf "Copying config files...\n"
 rm -rf .config &
 mkdir -p ~/.config & 
 cp -r config/* ~/.config/ || { echo "Error: Failed to copy config files."; exit 1; } 2>&1 | tee -a "$LOG"
 rm -rf .bashrc && cp misc/.bashrc .bashrc 2>&1 | tee -a "$LOG"   
-printf "Setting executables...\n"
 chmod +x ~/.config/hypr/screenshot.sh 2>&1 | tee -a "$LOG"
 chmod +x ~/.config/waybar/mediaplayer.py 2>&1 | tee -a "$LOG"
 

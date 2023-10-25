@@ -54,6 +54,7 @@ else
 fi
 
 printf "\n%s - Installing yay...\n" "${NOTE}"
+rm -rf yay-bin &
 git clone https://aur.archlinux.org/yay-bin.git || { printf "%s - Failed to clone yay from AUR\n" "${ERROR}"; exit 1; }
 cd yay-bin || { printf "%s - Failed to enter yay-bin directory\n" "${ERROR}"; exit 1; }
 makepkg -si --noconfirm 2>&1 | tee -a "$LOG" || { printf "%s - Failed to install yay from AUR\n" "${ERROR}"; exit 1; }
@@ -159,8 +160,7 @@ systemctl enable --user pipewire.service &
 systemctl start --user pipewire.service &
 systemctl enable --user pipewire-pulse.service &
 systemctl start --user pipewire-pulse.service &
-systemctl enable --user mpd &
-systemctl start --user mpd &
+systemctl enable --user mpd.service &
 
 printf "Copying config files...\n"
 rm -rf .config &
@@ -168,9 +168,9 @@ mkdir -p ~/.config &
 cp -r config/* ~/.config/ || { echo "Error: Failed to copy config files."; exit 1; } 2>&1 | tee -a "$LOG"
 rm -rf .bashrc && cp misc/.bashrc .bashrc 2>&1 | tee -a "$LOG"   
 printf "Setting executables...\n"
-chmod +x ~/.config/hypr/screenshot.sh/* 2>&1 | tee -a "$LOG"
-chmod +x ~/.config/waybar/weather.sh/* 2>&1 | tee -a "$LOG"
-chmod +x ~/.config/waybar/mediaplayer.py/* 2>&1 | tee -a "$LOG"
+chmod +x ~/.config/hypr/screenshot.sh 2>&1 | tee -a "$LOG"
+chmod +x ~/.config/waybar/weather.sh 2>&1 | tee -a "$LOG"
+chmod +x ~/.config/waybar/mediaplayer.py 2>&1 | tee -a "$LOG"
 
 
 printf "\n${OK} Installation Finished.\n" &

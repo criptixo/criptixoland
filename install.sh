@@ -164,12 +164,11 @@ systemctl enable --user mpd.service &
 
 printf "Copying config files...\n"
 rm -rf .config &
-mkdir -p ~/.config &
+mkdir -p ~/.config & 
 cp -r config/* ~/.config/ || { echo "Error: Failed to copy config files."; exit 1; } 2>&1 | tee -a "$LOG"
 rm -rf .bashrc && cp misc/.bashrc .bashrc 2>&1 | tee -a "$LOG"   
 printf "Setting executables...\n"
 chmod +x ~/.config/hypr/screenshot.sh 2>&1 | tee -a "$LOG"
-chmod +x ~/.config/waybar/weather.sh 2>&1 | tee -a "$LOG"
 chmod +x ~/.config/waybar/mediaplayer.py 2>&1 | tee -a "$LOG"
 
 
